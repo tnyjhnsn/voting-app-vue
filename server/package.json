@@ -1,0 +1,35 @@
+{
+  "name": "voting-app-server",
+  "version": "1.0.0",
+  "description": "FCC - Web App - Voting App Server",
+  "main": "src/server.js",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/tnyjhnsn/voting-app.git"
+  },
+  "homepage": "https://github.com/tnyjhnsn/voting-app#readme",
+  "bugs": "https://github.com/tnyjhnsn/voting-app/issues",
+  "scripts": {
+    "start": "nodemon src/server.js --exec 'npm run lint && node'",
+    "lint": "eslint **/*.js"
+  },
+  "author": "Tony Johnson <tony@tosp.net.au>",
+  "license": "MIT",
+  "dependencies": {
+    "bcrypt": "^1.0.3",
+    "bluebird": "^3.5.0",
+    "body-parser": "^1.18.2",
+    "cors": "^2.8.4",
+    "dotenv": "^4.0.0",
+    "express": "^4.16.1",
+    "joi": "^11.1.1",
+    "jsonwebtoken": "^8.0.1",
+    "mongoose": "^4.11.14",
+    "morgan": "^1.9.0"
+  },
+  "devDependencies": {
+    "eslint": "^4.8.0",
+    "eslint-config-airbnb-base": "^12.0.2",
+    "eslint-plugin-import": "^2.7.0"
+  }
+}
