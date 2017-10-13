@@ -62,7 +62,7 @@ export default {
     if (this.$route.params.pollId) {
       this.editing = true
       try {
-        const response = await PollService.poll(this.$route.params.pollId)
+        const response = await PollService.viewPoll(this.$route.params.pollId)
         this.poll = response.data.poll
       } catch (error) {
         this.error = error.response.data.error
@@ -96,9 +96,9 @@ export default {
 
     savePoll() {
       if (this.editing) {
-        this.doSave(PollService.update)
+        this.doSave(PollService.updatePoll)
       } else {
-        this.doSave(PollService.create)
+        this.doSave(PollService.createPoll)
       }
     },
 

@@ -4,8 +4,8 @@
    <v-toolbar class="pink">
       <v-toolbar-title class="white--text">Let's vote</v-toolbar-title>
       <v-spacer></v-spacer>
-        <v-btn flat class="white--text" v-if="this.$store.state.isLoggedIn" @click="allPolls()">All Polls</v-btn>
-        <v-btn flat class="white--text" v-if="this.$store.state.isLoggedIn" @click="myPolls()">My Polls</v-btn>
+        <v-btn flat class="white--text" v-if="this.$store.state.isLoggedIn" @click="viewAll()">All Polls</v-btn>
+        <v-btn flat class="white--text" v-if="this.$store.state.isLoggedIn" @click="viewMine()">My Polls</v-btn>
         <v-btn flat class="white--text" v-if="this.$store.state.isLoggedIn" @click="createPoll()">Create Poll</v-btn>
     </v-toolbar>
     <v-card>
@@ -40,7 +40,7 @@ export default {
   },
 
   mounted() {
-    this.allPolls()
+    this.viewAll()
   },
 
   methods: {
@@ -51,13 +51,13 @@ export default {
       })
     },
 
-    async allPolls() {
-      const response = await PollService.list()
+    async viewAll() {
+      const response = await PollService.viewAll()
       this.polls = response.data.polls
     },
 
-    async myPolls() {
-      const response = await PollService.listMy(this.$store.state.user._id)
+    async viewMine() {
+      const response = await PollService.viewMine(this.$store.state.user._id)
       this.polls = response.data.polls
     },
 

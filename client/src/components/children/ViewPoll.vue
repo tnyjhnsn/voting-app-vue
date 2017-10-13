@@ -32,7 +32,7 @@
         <v-btn flat class="blue--text" v-if="showMenu" @click="deletePoll()">Delete Poll</v-btn>
         <v-spacer />
         <v-btn flat class="orange--text" @click="cancel()">Cancel</v-btn>
-        <v-btn flat class="green--text" @click="addVote()">Add Vote</v-btn>
+        <v-btn flat class="green--text" @click="incrementVote()">Add Vote</v-btn>
       </v-card-actions>
       <std-dialog v-model="alert" headline="Missing Vote" @closeDialog="closeDialog()"></std-dialog>
       <vue-chart v-if="showChart"
@@ -90,7 +90,7 @@ export default {
   },
 
   async mounted() {
-    const response = await PollService.poll(this.$route.params.pollId)
+    const response = await PollService.viewPoll(this.$route.params.pollId)
     this.poll = response.data.poll
     this.rows = this.poll.answers.map((answer) => {
       this.showChart += answer.votes
@@ -118,7 +118,7 @@ export default {
 
     async deletePoll() {
       try {
-        await PollService.delete(this.poll._id)
+        await PollService.deletePoll(this.poll._id)
         this.$router.push({
           path: '/polls'
         })
@@ -132,14 +132,14 @@ export default {
       this.checked = index
     },
 
-    async addVote() {
+    async incrementVote() {
       if (this.checked === null) {
         this.alert.message = 'Please select an answer to make your vote count'
         this.alert.status = true
         return
       }
       try {
-        await PollService.addVote(this.poll.answers[this.checked]._id)
+        await PollService.incrementVote(this.poll.answers[this.checked]._id)
         this.$router.push({
           path: '/polls'
         })

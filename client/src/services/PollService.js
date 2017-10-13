@@ -2,31 +2,31 @@ import Api from '@/services/Api'
 
 export default {
 
-  list() {
-    return Api().get('/polls')
-  },
-
-  listMy(userId) {
-    return Api().get(`/polls/${userId}`)
-  },
-
-  create(poll) {
+  createPoll(poll) {
     return Api().post('poll', poll)
   },
 
-  poll(pollId) {
+  viewAll() {
+    return Api().get('/polls')
+  },
+
+  viewMine(userId) {
+    return Api().get(`/polls/${userId}`)
+  },
+
+  viewPoll(pollId) {
     return Api().get(`/poll/${pollId}`)
   },
 
-  delete(pollId) {
+  deletePoll(pollId) {
     return Api().delete(`/poll/${pollId}`)
   },
 
-  addVote(answerId) {
+  incrementVote(answerId) {
     return Api().put(`/poll/${answerId}`)
   },
 
-  update(poll) {
+  updatePoll(poll) {
     return Api().put('/poll', poll)
   }
 
