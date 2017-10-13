@@ -14,30 +14,30 @@ module.exports = (app) => {
   )
   app.get(
     '/polls',
-    PollsController.list
+    PollsController.getAll
   )
   app.get(
     '/polls/:userId',
-    PollsController.listMy
+    PollsController.getMine
   )
   app.post(
-    '/poll/create',
-    PollsController.create
+    '/poll',
+    PollsController.createPoll
   )
   app.get(
     '/poll/:pollId',
-    PollsController.poll
+    PollsController.getPoll
   )
   app.delete(
-    '/poll/delete/:pollId',
-    PollsController.delete
+    '/poll/:pollId',
+    PollsController.deletePoll
   )
   app.put(
-    '/poll/vote/:answerId',
-    PollsController.vote
+    '/poll/:answerId',
+    PollsController.incrementVote
   )
-  app.post(
-    '/poll/update',
-    PollsController.update
+  app.put(
+    '/poll',
+    PollsController.updatePoll
   )
 }

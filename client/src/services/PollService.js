@@ -11,7 +11,7 @@ export default {
   },
 
   create(poll) {
-    return Api().post('poll/create', poll)
+    return Api().post('poll', poll)
   },
 
   poll(pollId) {
@@ -19,15 +19,15 @@ export default {
   },
 
   delete(pollId) {
-    return Api().delete(`/poll/delete/${pollId}`)
+    return Api().delete(`/poll/${pollId}`)
   },
 
   addVote(answerId) {
-    return Api().put(`/poll/vote/${answerId}`)
+    return Api().put(`/poll/${answerId}`)
   },
 
   update(poll) {
-    return Api().post('/poll/update', poll)
+    return Api().put('/poll', poll)
   }
 
 }

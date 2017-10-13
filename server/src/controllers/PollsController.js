@@ -2,7 +2,7 @@ const Poll = require('../models/Poll')
 
 module.exports = {
 
-  async create(req, res) {
+  async createPoll(req, res) {
     await Poll.create(req.body, (err, poll) => {
       if (err) {
         return res.status(400).send({
@@ -15,7 +15,7 @@ module.exports = {
     })
   },
 
-  async list(req, res) {
+  async getAll(req, res) {
     await Poll.find({}, (err, polls) => {
       if (err) {
         return res.status(500).send({
@@ -28,7 +28,7 @@ module.exports = {
     }) 
   },
 
-  async listMy(req, res) {
+  async getMine(req, res) {
     await Poll.find({ owner: req.params.userId }, (err, polls) => {
       if (err) {
         return res.status(500).send({
@@ -41,7 +41,7 @@ module.exports = {
     })
   },
 
-  async poll(req, res) {
+  async getPoll(req, res) {
     await Poll.findById(req.params.pollId, (err, poll) => {
       if (err) {
         return res.status(500).send({
@@ -54,7 +54,7 @@ module.exports = {
     })
   },
 
-  async delete(req, res) {
+  async deletePoll(req, res) {
     await Poll.findByIdAndRemove(req.params.pollId , (err, poll) => {
       if (err) {
         return res.status(500).send({
@@ -67,7 +67,7 @@ module.exports = {
     })
   },
 
-  async vote(req, res) {
+  async incrementVote(req, res) {
     await Poll.findOneAndUpdate(
       { 'answers._id': req.params.answerId },
       { $inc: { 'answers.$.votes': 1 }}, (err, poll) => {
@@ -82,7 +82,7 @@ module.exports = {
     })
   },
 
-  async update(req, res) {
+  async updatePoll(req, res) {
     await Poll.findOneAndUpdate(
       { '_id': req.body._id },
       req.body,
