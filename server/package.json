@@ -16,8 +16,8 @@
   "author": "Tony Johnson <tony@tosp.net.au>",
   "license": "MIT",
   "dependencies": {
-    "bcrypt": "^1.0.3",
-    "bluebird": "^3.5.0",
+    "bcrypt-nodejs": "0.0.3",
+    "bluebird": "^3.5.1",
     "body-parser": "^1.18.2",
     "cors": "^2.8.4",
     "dotenv": "^4.0.0",
