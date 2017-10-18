@@ -1,4 +1,5 @@
 const User = require('../models/User')
+const passport = require('passport')
 const jwt = require('jsonwebtoken')
 
 function signUser(user) {
@@ -11,8 +12,9 @@ function signUser(user) {
 module.exports = {
 
   async register(req, res) {
-    const user = await User.create(req.body, (err, user) => {
+    await User.create(req.body, (err, user) => {
       if (err) {
+        console.log(err)
         return res.status(400).send({
           error: 'That email address is already being used'
         })
@@ -32,16 +34,18 @@ module.exports = {
         error: 'That email address is incorrect'
       })
     }
-    const isValidPassword = await user.comparePassword(password)
-    if (!isValidPassword) {
-      return res.status(400).send({
-        error: 'That password is incorrect'
+    user.comparePassword(password, function(err, isMatch) {
+      if (err) throw err;
+      if (!isMatch) {
+        return res.status(400).send({
+          error: 'That password is incorrect'
+        })
+      }
+      res.send({
+        user: user,
+        token: signUser(user.toJSON())
       })
-    }
-    res.send({
-      user: user,
-      token: signUser(user.toJSON())
     })
   }
-
+  
 }

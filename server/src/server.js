@@ -5,6 +5,9 @@ const bodyParser = require('body-parser')
 const cors = require('cors')
 const morgan = require('morgan')
 const routes = require('./routes')
+const mongoose = require('mongoose')
+const passport = require('passport')
+const LocalStrategy = require('passport-local').Strategy
 
 const app = express()
 app.use(bodyParser.urlencoded({
@@ -13,13 +16,26 @@ app.use(bodyParser.urlencoded({
 app.use(bodyParser.json())
 app.use(cors())
 app.use(morgan('combined'))
+app.use(require('express-session')({
+  secret: 'ilovethisstuff',
+  resave: false,
+  saveUninitialized: false
+}))
 
-const mongoose = require('mongoose')
+app.use(passport.initialize())
+app.use(passport.session())
+
 mongoose.Promise = require('bluebird')
 
 mongoose.connect(process.env.MONGO_URI, {
   useMongoClient: true
 })
+
+const User = require('./models/User')
+
+passport.use(new LocalStrategy(User.authenticate()))
+passport.serializeUser(User.serializeUser())
+passport.deserializeUser(User.deserializeUser())
 
 /* eslint-disable no-console */
 const db = mongoose.connection
