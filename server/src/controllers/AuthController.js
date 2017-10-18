@@ -35,7 +35,11 @@ module.exports = {
       })
     }
     user.comparePassword(password, function(err, isMatch) {
-      if (err) throw err;
+      if (err) {
+        return res.status(400).send({
+          error: 'General error checking password'
+        })
+      }
       if (!isMatch) {
         return res.status(400).send({
           error: 'That password is incorrect'
@@ -47,5 +51,5 @@ module.exports = {
       })
     })
   }
-  
+
 }

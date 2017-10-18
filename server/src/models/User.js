@@ -13,14 +13,13 @@ const UserSchema = new Schema({
 UserSchema.plugin(passportLocalMongoose)
 
 UserSchema.pre('save', function(next) {
-  const user = this;
   const SALT_FACTOR = 10
-  if (!user.isModified('password')) return next();
-  bcrypt.genSalt(SALT_FACTOR, function(err, salt) {
+  if (!this.isModified('password')) return next();
+  bcrypt.genSalt(SALT_FACTOR, (err, salt) => {
     if (err) return next(err);
-    bcrypt.hash(user.password, salt, function(err, hash) {
+    bcrypt.hash(this.password, salt, (err, hash) => {
         if (err) return next(err);
-        user.password = hash;
+        this.password = hash;
         next();
     })
   })
